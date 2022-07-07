@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="personsTable">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a th:href="@{/person/add}" class="btn btn-success pull-right">
+            <i class="glyphicon glyphicon-plus"></i>
+          </a>
+          <span class="lead">Daftar Admin</span>
+        </div>
+        <div class="panel-body" th:if="${#lists.isEmpty(persons)}">
+          <div class="alert alert-warning" style="margin-bottom: 0">No person found.</div>
+        </div>
+        <table class="table table-hover" th:if="${!#lists.isEmpty(persons)}">
+          <thead>
+            <tr>
+              <th width="70">ID</th>
+              <th>Username</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th width="120"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="a : ${persons}">
+              <td th:text="${a.id}">ID</td>
+              <td th:text="${a.username}">Username</td>
+              <td th:text="${a.firstName}">First Name</td>
+              <td th:text="${a.lastName}">Last Name</td>
+              <td th:text="${a.email}">Email</td>
+              <td th:text="${a.phone}">Phone</td>
+              <td>
+                <a th:href="@{/person/edit/{id}(id=${a.id})}" class="btn btn-primary btn-sm" title="Edit">
+                  <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <form th:action="@{/person/delete/{id}(id=${a.id})}" th:method="delete" style="display: inline;">
+                  <button class="btn btn-danger btn-sm" title="Delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

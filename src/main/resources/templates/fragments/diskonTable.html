@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="diskonTable">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a th:href="@{/diskon/add}" class="btn btn-success pull-right">
+            <i class="glyphicon glyphicon-plus"></i>
+          </a>
+          <span class="lead">List of Diskon</span>
+        </div>
+        <div class="panel-body" th:if="${#lists.isEmpty(diskon)}">
+          <div class="alert alert-warning" style="margin-bottom: 0">No diskon found.</div>
+        </div>
+        <table class="table table-hover" th:if="${!#lists.isEmpty(diskon)}">
+          <thead>
+            <tr>
+              <th width="70">ID</th>
+              <th>Code</th>
+              <th>Potongan(%)</th>
+              <th>expired</th>
+              <th width="120"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="d : ${diskon}">
+              <td th:text="${d.id}"></td>
+              <td th:text="${d.code}"></td>
+              <td th:text="${d.persen}"></td>
+              <td th:text="${d.expired}"></td>
+              <td>
+                <a th:href="@{/diskon/edit/{id}(id=${d.id})}" class="btn btn-primary btn-sm" title="Edit">
+                  <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <form th:action="@{/diskon/delete/{id}(id=${d.id})}" th:method="delete" style="display: inline;">
+                  <button class="btn btn-danger btn-sm" title="Delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

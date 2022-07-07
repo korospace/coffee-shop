@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head lang="en">
+    <title th:text="${diskon.id == null} ? 'Create Diskon' : 'Edit Diskon: ' + *{code}">
+    </title>
+    <th:block th:include="fragments/head :: head"></th:block>
+  </head>
+  <body>
+    <div class="container">
+      <th:block th:include="fragments/header :: header"></th:block>
+      <form th:action="${diskon.id != null} ? @{/diskon/edit/{id}(id=${diskon.id})} : @{/diskon/add}" th:method="${diskon.id != null} ? 'put' : 'post'" th:object="${diskon}">
+        <input type="hidden" th:field="*{id}" />
+        <div class="panel panel-default">
+          <div class="panel-heading lead">
+            <span th:text="${diskon.id == null} ? 'Create diskon' : 'Edit diskon: ' + *{code}"></span></div>
+          <fieldset>
+            <div class="col-lg-12" th:if="${message != null}">
+              <div class="alert alert-success" th:text="${message}"></div>
+            </div>
+            <div class="col-lg-12" th:if="${messageError != null}">
+              <div class="alert alert-danger" th:text="${messageError}"></div>
+            </div>
+            <div class="col-lg-12 form-group" th:classappend="${#fields.hasErrors('code')} ? 'has-error'">
+              <label class="col-lg-1 control-label" for="code">Code</label>
+              <div class="col-lg-4">
+                <input type="text" id="code" class="form-control" th:field="*{code}" />
+                <small class="help-block"
+                       th:if="${#fields.hasErrors('code')}"
+                       th:errors="*{code}"></small>
+              </div>
+            </div>
+            <div class="col-lg-12 form-group" th:classappend="${#fields.hasErrors('persen')} ? 'has-error'">
+              <label class="col-lg-1 control-label" for="persen">Persen</label>
+              <div class="col-lg-4">
+                <input type="number" id="persen" class="form-control" th:field="*{persen}" />
+                <small class="help-block"
+                       th:if="${#fields.hasErrors('persen')}"
+                       th:errors="*{persen}"></small>
+              </div>
+            </div>
+            <div class="col-lg-12 form-group" th:classappend="${#fields.hasErrors('expired')} ? 'has-error'">
+              <label class="col-lg-1 control-label" for="expired">Expired</label>
+              <div class="col-lg-4">
+                <input type="date" id="expired" class="form-control"
+                       th:field="*{expired}" />
+                <small class="help-block"
+                       th:if="${#fields.hasErrors('expired')}"
+                       th:errors="*{expired}"></small>
+              </div>
+            </div>
+            <div class="col-lg-12 form-group">
+              <button type="submit" class="btn btn-primary">Save</button>
+              <a class="btn btn-default" th:href="@{/diskon}">Cancel</a>
+            </div>
+          </fieldset>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

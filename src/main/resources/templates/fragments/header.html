@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head lang="en"></head>
+  <body>
+    <div th:fragment="header">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">CoffeeShop</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}">
+                <a href="#" th:href="@{/}">
+                  Produk
+                </a>
+              </li>
+              <li th:classappend="${#httpServletRequest.getRequestURI() == '/diskon' ? 'active':''}">
+                <a href="#" th:href="@{/diskon}" sec:authorize="hasRole('ROLE_ADMIN')">
+                  Diskon
+                </a>
+              </li>
+              <li th:classappend="${#httpServletRequest.getRequestURI() == '/orders/add' ? 'active':''}">
+                <a href="#" th:href="@{/orders/add}" sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
+                  Tambah order
+                </a>
+              </li>
+              <li th:classappend="${#httpServletRequest.getRequestURI() == '/orders' ? 'active':''}">
+                <a href="#" th:href="@{/orders}" sec:authorize="hasRole('ROLE_ADMIN')">
+                  Orderan
+                </a>
+              </li>
+              <li th:classappend="${#httpServletRequest.getRequestURI() == '/person' ? 'active':''}">
+                <a href="#" th:href="@{/person}" sec:authorize="hasRole('ROLE_ADMIN')">
+                  Admin
+                </a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}">
+                <a href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()">
+                  Login
+                </a>
+              </li>
+              <!-- <li><a href="#" th:href="@{/register}" sec:authorize="!isAuthenticated()">Register</a></li> -->
+              <li>
+                <a href="#" th:href="@{/profile}" sec:authorize="isAuthenticated()">
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a href="#" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </body>
+</html>
